@@ -1,21 +1,23 @@
 version: '3.9'
 services:
-  callender_memo:
-    image: node:21-alpine3.17
+  calender_memo:
+    build: .
     volumes:
-      - ./callender_memo:/callender_memo
-    working_dir: /callender_memo
+      - ./calender_memo:/calender_memo
+      - ./calender_memo/node_modules:/node_modules
+    working_dir: /calender_memo
     ports:
       - 3000:3000
       - 8080:8080
-    command: npm install && npm run dev
+    command: npm run dev
+    environment:
+            - WATCHPACK_POLLING=true
     tty: true
-
   db:
     image: mysql:8.2.0
     volumes:
-      - ./callender_memo/db:/var/lib/callender_memo/db
+      - ./calender_memo/db:/var/lib/mysql
     env_file:
-      - ./callender_memo/.env
+      - ./calender_memo/.env
     ports:
       - 3306:3306
