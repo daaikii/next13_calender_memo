@@ -1,12 +1,10 @@
 import { IconType } from "react-icons"
 
-import styles from "./Button.module.scss"
-
 type ButtonProps = {
-  icon?: IconType
   label: string
   type: "button" | "submit" | "reset",
   disabled: boolean
+  icon?: IconType
 }
 
 const Button = ({ icon: Icon, label, type, disabled }: ButtonProps) => {
@@ -14,7 +12,7 @@ const Button = ({ icon: Icon, label, type, disabled }: ButtonProps) => {
     <button
       type={type}
       disabled={disabled}
-      className={styles.button}
+      className="p-1 border rounded-xl mt-6 min-w-full"
     >
       {Icon && <Icon />}
       {label}

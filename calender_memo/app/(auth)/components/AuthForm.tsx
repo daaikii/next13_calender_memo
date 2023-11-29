@@ -1,9 +1,12 @@
+"use client"
+
 import { useState, useEffect, useCallback } from "react"
 import { useForm, FieldValues, SubmitHandler } from "react-hook-form"
 import { useSession, signIn } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import axios from "axios"
 
+import styles from "@/app/(auth)/components/AuthForm.module.scss"
 import Input from "@/app/components/ui/Input/Input"
 import Button from "@/app/components/ui/Button/Button"
 
@@ -31,7 +34,7 @@ const AuthForm = () => {
   }, [valiant])
 
 
-  const onSubmit: SubmitHandler<FieldValues> = async (data: FieldValues) => {
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
     //ログインの場合
     if (valiant === "Login") {
       setIsLoading(true)
@@ -50,7 +53,8 @@ const AuthForm = () => {
     //レジスターの場合
     if (valiant === "Register") {
       setIsLoading(true)
-      axios.post("/app/api/register", data)
+      axios
+        .post("/api/register", data)
         .then(() => signIn("credentials", { ...data, redirect: false }))
         .then((callback) => {
           if (callback?.error) {
@@ -66,43 +70,55 @@ const AuthForm = () => {
 
 
   return (
-    <>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        {valiant === "Register" &&
+    <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+      <div className="        
+      bg-white
+        px-4
+        py-8
+        shadow
+        sm:rounded-lg
+        sm:px-10"
+      >
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className=""
+        >
+          {valiant === "Register" &&
+            <Input
+              register={register}
+              disabled={isLoading}
+              required
+              errors={errors}
+              label={"email"}
+              type={"text"}
+              id={"email"}
+            />
+          }
           <Input
             register={register}
             disabled={isLoading}
             required
             errors={errors}
-            label={"email"}
+            label={"name"}
             type={"text"}
-            id={"email"}
+            id={"name"}
           />
-        }
-        <Input
-          register={register}
-          disabled={isLoading}
-          required
-          errors={errors}
-          label={"id"}
-          type={"text"}
-          id={"id"}
-        />
-        <Input
-          register={register}
-          disabled={isLoading}
-          required
-          errors={errors}
-          label={"password"}
-          type={"password"}
-          id={"password"}
-        />
-        <Button type="submit" disabled={isLoading} label="SUBMIT" />
-      </form>
-      <p onClick={() => toggleValiant()}>
-        {valiant === "Register" ? "Login" : "Register"}
-      </p>
-    </>
+          <Input
+            register={register}
+            disabled={isLoading}
+            required
+            errors={errors}
+            label={"password"}
+            type={"password"}
+            id={"password"}
+          />
+          <Button type="submit" disabled={isLoading} label={valiant === "Register" ? "Register" : "Login"} />
+        </form>
+        <p onClick={() => toggleValiant()} className="mt-3 cursor-pointer text-blue-200 text-center">
+          {valiant === "Register" ? "Login" : "Register"}
+        </p>
+      </div>
+    </div>
   )
 }
 

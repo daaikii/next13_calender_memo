@@ -1,23 +1,13 @@
-import NextAuth, { User } from 'next-auth'
+import NextAuth, { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
-import TwitterProvider from 'next-auth/providers/twitter'
-import GoogleProvider from 'next-auth/providers/google'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import bcrypt from "bcrypt"
 
 import prisma from "@/app/lib/prismadb"
 
-export const authOption = {
+export const authOption: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
-    TwitterProvider({
-      clientId: "",
-      clientSecret: ""
-    }),
-    GoogleProvider({
-      clientId: "",
-      clientSecret: ""
-    }),
     CredentialsProvider({
       name: "credentials",
       credentials: {
@@ -36,7 +26,11 @@ export const authOption = {
         if (!user || !user.hashedPassword) {
           throw new Error()
         }
-        const isCorrectPassword = await bcrypt.compare(credentials.password, user.hashedPassword)
+        const isCorrectPassword = await bcrypt.compare(
+          credentials.password,
+          user.hashedPassword
+        )
+
         if (!isCorrectPassword) {
           throw new Error()
         }
@@ -44,7 +38,13 @@ export const authOption = {
       }
     })
   ],
+  debug: process.env.NODE_ENV === 'development',
+  session: {
+    strategy: "jwt",
+  },
   secret: process.env.NEXTAUTH_SECRET,
 }
 
-export default NextAuth(authOption)
+const handler = NextAuth(authOption)
+
+export { handler as POST, handler as GET }

@@ -4,20 +4,22 @@ services:
     build: .
     volumes:
       - ./calender_memo:/calender_memo
-      - ./calender_memo/node_modules:/node_modules
+      - /node_modules:/calender_memo/node_modules
     working_dir: /calender_memo
     ports:
       - 3000:3000
-      - 8080:8080
-    command: npm run dev
+      - 5555:5555
     environment:
             - WATCHPACK_POLLING=true
     tty: true
+    command: npm run dev
   db:
     image: mysql:8.2.0
     volumes:
-      - ./calender_memo/db:/var/lib/mysql
+      - /db:/var/lib/mysql
     env_file:
       - ./calender_memo/.env
     ports:
       - 3306:3306
+volumes:
+  node_modules:

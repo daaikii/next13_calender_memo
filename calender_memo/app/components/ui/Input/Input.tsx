@@ -1,5 +1,4 @@
 import { UseFormRegister, FieldValues, FieldErrors } from "react-hook-form"
-import styles from "./Input.module.scss"
 
 type InputProps = {
   register: UseFormRegister<FieldValues>,
@@ -23,18 +22,19 @@ const Input = (
   }: InputProps
 ) => {
   return (
-    <>
-      {errors[id]}
-      <label htmlFor={id}>{label}</label>
+    <div className="mt-3">
+      <p>
+        {errors[id] && `${errors[id]}`}
+      </p>
+      <label htmlFor={id} className="mt">{label}</label>
       <input
-        className={styles.input}
+        className="w-full border mt-1"
         disabled={disabled}
-        required={required}
         type={type}
         id={id}
-        {...register}
+        {...register(id, { required })}
       />
-    </>
+    </div>
   )
 }
 
