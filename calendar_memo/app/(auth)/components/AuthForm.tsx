@@ -6,7 +6,6 @@ import { useSession, signIn } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import axios from "axios"
 
-import styles from "@/app/(auth)/components/AuthForm.module.scss"
 import Input from "@/app/components/ui/Input/Input"
 import Button from "@/app/components/ui/Button/Button"
 
@@ -21,11 +20,11 @@ const AuthForm = () => {
 
   useEffect(() => {
     if (session.status === "authenticated") {
-      router.push("/calender")
+      router.push("/calendar")
     }
   }, [router, session.status])
 
-  const toggleValiant = useCallback(() => {
+  const toggleVariant = useCallback(() => {
     if (valiant === "Login") {
       setValiant("Register")
     } else {
@@ -44,7 +43,7 @@ const AuthForm = () => {
             //エラー文を表示
           }
           if (callback?.ok) {
-            router.push("/calender")
+            router.push("/calendar")
           }
         }
         ).finally(() => setIsLoading(false))
@@ -61,7 +60,7 @@ const AuthForm = () => {
             //エラー文を表示
           }
           if (callback?.ok) {
-            router.push("/calender")
+            router.push("/calendar")
           }
         })
         .finally(() => setIsLoading(false))
@@ -114,7 +113,7 @@ const AuthForm = () => {
           />
           <Button type="submit" disabled={isLoading} label={valiant === "Register" ? "Register" : "Login"} />
         </form>
-        <p onClick={() => toggleValiant()} className="mt-3 cursor-pointer text-blue-200 text-center">
+        <p onClick={() => toggleVariant()} className="mt-3 cursor-pointer text-blue-200 text-center">
           {valiant === "Register" ? "Login" : "Register"}
         </p>
       </div>
