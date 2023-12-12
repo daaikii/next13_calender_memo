@@ -1,11 +1,11 @@
 version: '3.9'
 services:
-  calender_memo:
+  calendar_memo:
     build: .
     volumes:
-      - ./calender_memo:/calender_memo
-      - /node_modules:/calender_memo/node_modules
-    working_dir: /calender_memo
+      - ./calendar_memo:/calendar_memo
+      - /node_modules:/calendar_memo/node_modules
+    working_dir: /calendar_memo
     ports:
       - 3000:3000
       - 5555:5555
@@ -16,10 +16,10 @@ services:
   db:
     image: mysql:8.2.0
     volumes:
-      - /db:/var/lib/mysql
+      - db:/var/lib/mysql
     env_file:
-      - ./calender_memo/.env
+      - ./calendar_memo/.env
     ports:
       - 3306:3306
 volumes:
-  node_modules:
+    db:

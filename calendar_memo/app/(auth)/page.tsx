@@ -9,7 +9,8 @@ const AuthPage = () => {
   py-12 
   sm:px-6 
   lg:px-8 
-  bg-gray-100">
+  bg-gray-100"
+  >
     <AuthForm />
   </div>
 }
