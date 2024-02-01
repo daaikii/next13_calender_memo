@@ -20,7 +20,7 @@ const AuthForm = () => {
 
   useEffect(() => {
     if (session.status === "authenticated") {
-      router.push("/calendar")
+      router.push("/")
     }
   }, [router, session.status])
 
@@ -37,13 +37,13 @@ const AuthForm = () => {
     //ログインの場合
     if (valiant === "Login") {
       setIsLoading(true)
-      signIn("credentials", { ...data })
+      signIn("credentials", { ...data, redirect: false })
         .then((callback) => {
           if (callback?.error) {
             //エラー文を表示
           }
           if (callback?.ok) {
-            router.push("/calendar")
+            router.push("/")
           }
         }
         ).finally(() => setIsLoading(false))
@@ -60,7 +60,7 @@ const AuthForm = () => {
             //エラー文を表示
           }
           if (callback?.ok) {
-            router.push("/calendar")
+            router.push("/")
           }
         })
         .finally(() => setIsLoading(false))
@@ -82,26 +82,26 @@ const AuthForm = () => {
           onSubmit={handleSubmit(onSubmit)}
           className=""
         >
+          <Input
+            register={register}
+            disabled={isLoading}
+            required
+            errors={errors}
+            label={"email"}
+            type={"text"}
+            id={"email"}
+          />
           {valiant === "Register" &&
             <Input
               register={register}
               disabled={isLoading}
               required
               errors={errors}
-              label={"email"}
+              label={"name"}
               type={"text"}
-              id={"email"}
+              id={"name"}
             />
           }
-          <Input
-            register={register}
-            disabled={isLoading}
-            required
-            errors={errors}
-            label={"name"}
-            type={"text"}
-            id={"name"}
-          />
           <Input
             register={register}
             disabled={isLoading}

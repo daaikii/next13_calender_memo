@@ -27,13 +27,21 @@ const Input = (
         {errors[id] && `${errors[id]}`}
       </p>
       <label htmlFor={id} className="mt">{label}</label>
-      <input
-        className="w-full border mt-1"
-        disabled={disabled}
-        type={type}
-        id={id}
-        {...register(id, { required })}
-      />
+      {type === "textarea"
+        ? <textarea
+          className="w-full border mt-1 leading-6 h-60"
+          disabled={disabled}
+          id={id}
+          {...register(id, { required })}
+        />
+        : <input
+          className="w-full border mt-1"
+          disabled={disabled}
+          type={type}
+          id={id}
+          {...register(id, { required })}
+        />
+      }
     </div>
   )
 }

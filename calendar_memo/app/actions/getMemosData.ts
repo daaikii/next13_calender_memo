@@ -1,38 +1,39 @@
 import prisma from "../libs/prismadb"
 import getCurrentUser from "./getCurrentUser"
 
-const getMemoData = async (year: number, month: number, day: number) => {
-  const date = new Date(`${year}-${month}-${day}`)
+const getMemosData = async (year: number, month: number) => {
+  const date = new Date(year, month, 1)
   const user = await getCurrentUser()
   if (!user?.email) {
-    return null
+    return []
   }
   try {
-    const memoData = await prisma.memo.findFirst({
+    const memoData = await prisma.memo.findMany({
       where: {
         AND: [
           {
             user: {
               email: user?.email
-            }
+            },
           },
           {
             createdAt: {
-              equals: new Date(year, month - 1, day),
+              gte: new Date(year, month - 1, 1),
+              lt: new Date(year, month, 0)
             }
           }
         ]
       }
     })
     if (!memoData) {
-      return null
+      return []
     }
     return memoData
   }
   catch {
-    return null
+    return []
   }
 }
 
 
-export default getMemoData
+export default getMemosData
