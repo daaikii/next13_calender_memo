@@ -1,4 +1,4 @@
-const useSettingDate = (year?: number, month?: number) => {
+const getSettingStartEnd = (year?: number, month?: number) => {
   const newDate = { start: new Date(), end: new Date() }
   if (year && month) {        //指定月
     const start = new Date(year, month - 1, 1)      //指定月の初日を取得
@@ -15,4 +15,4 @@ const useSettingDate = (year?: number, month?: number) => {
   return { start, end }
 }
 
-export default useSettingDate
+export default getSettingStartEnd

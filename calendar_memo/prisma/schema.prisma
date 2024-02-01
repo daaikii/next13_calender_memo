@@ -43,8 +43,9 @@ model Account {
 
 model Memo {
   id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
+  createdAt DateTime @unique @default(now())
+  title     String
   content   String
-  userId    String
+  userId    String   @unique
   user      User     @relation(fields: [userId], references: [id])
 }

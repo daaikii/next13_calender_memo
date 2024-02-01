@@ -13,6 +13,7 @@
     "@prisma/client": "^5.7.0",
     "axios": "^1.6.2",
     "bcrypt": "^5.1.1",
+    "clsx": "^2.1.0",
     "date-fns": "^2.30.0",
     "next": "14.0.2",
     "next-auth": "^4.24.5",
@@ -20,7 +21,8 @@
     "react-dom": "^18",
     "react-hook-form": "^7.48.2",
     "react-icons": "^4.12.0",
-    "sass": "^1.69.5"
+    "sass": "^1.69.5",
+    "swiper": "^11.0.5"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
